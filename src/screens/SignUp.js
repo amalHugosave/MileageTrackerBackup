@@ -1,8 +1,10 @@
 import React from 'react'
 import { StyleSheet, View , Text , Image , Button} from 'react-native'
 import SVGImg from '../rcs/signupFooter.svg';
+import LinearGradient from 'react-native-linear-gradient';
 const SignUp = ({navigation}) => {
   return (
+    <LinearGradient style={{flex : 1}}  colors={['#C5E3DC', '#F6F6EC']} >
     <View style={styles.container}>
         <View style={styles.header}>
             <Image source={require('../rcs/logo.png')} />
@@ -14,6 +16,7 @@ const SignUp = ({navigation}) => {
             <Image source={require('../rcs/signupFooter.png')}/>
         </View>
     </View>
+    </LinearGradient>
     
   )
 }
@@ -21,7 +24,7 @@ const SignUp = ({navigation}) => {
 const styles = StyleSheet.create({
     container : {
         flex:1,
-        backgroundColor: '#D0EAEA',
+        // backgroundColor: '#D0EAEA',
         
     },
     header :{

@@ -23,23 +23,29 @@ const RefuelingInfo = ({navigation}) => {
     } , [allVehicles , vehId ,allRefuelingData])
 
     const getRefuelingDataOfVeh = ()=>{
-        const curRefuelingData = realm.objects(Refueling).filtered('vehId == $0' , vehId);
-        setVehRefuelingData(curRefuelingData);
+        if(vehId)
+        {
+            const curRefuelingData = realm.objects(Refueling).filtered('vehId == $0' , vehId);
+            setVehRefuelingData(curRefuelingData);
+        }
     }
     const getvehiclesOfUser = ()=>{
-        // console.log("useEffect");
         const curVehiclesOfUser = realm.objects(Vehicles).filtered('userId == $0' , id);
         let arr = [];
         curVehiclesOfUser.map((veh)=>{
             arr.push({label : veh.name , value : veh._id})
-            // console.log("veh._id" ,veh._id , "vehId" , vehId )
-            if(veh._id.equals(vehId)){
+
+            if(vehId && veh._id.equals(vehId)){
     
                 const t = arr[0];
                 arr[0] = arr[arr.length - 1];
                 arr[arr.length - 1] = t;
             }
         })
+
+        if(curVehiclesOfUser.length > 0 && !vehId){
+            setVehicle({name : curVehiclesOfUser[0].name , type : curVehiclesOfUser[0].type , engine : curVehiclesOfUser[0].engine , userId : curVehiclesOfUser[0].userId , vehId : curVehiclesOfUser[0]._id , image : curVehiclesOfUser[0].image});
+        }
         setUservehicles(arr);
     }
 

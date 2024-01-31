@@ -5,7 +5,9 @@ import BarChart from './BarChart'
 import { Refueling } from '../Database/models/RefuelingSchema'
 import RefuelingCard from './RefuelingCard'
 const HomePageWithRefuelingData = ({priceChartData , mileage , avMileage , latestRefuelingData , navigation }) => {
-    console.log(latestRefuelingData);
+    const navigateToRefuleingInfo = ()=>{
+        navigation.navigate('Refueling' , {screen : 'refuelingInfo'});
+      }
   return (
     <View style={styles.container}>
         <Text style={styles.subHeading}>Fuel insights</Text>
@@ -18,7 +20,7 @@ const HomePageWithRefuelingData = ({priceChartData , mileage , avMileage , lates
 
         <View style={styles.refuelingTextContainer}>
             <Text style={styles.subHeading}>Refuelling history</Text>
-            <Pressable styles={styles.seeAllContainer}>
+            <Pressable  onPress={navigateToRefuleingInfo} styles={styles.seeAllContainer}>
             <Text style={styles.seeAll}>See all {'>'}</Text>
             </Pressable>
         </View>
@@ -36,7 +38,8 @@ const HomePageWithRefuelingData = ({priceChartData , mileage , avMileage , lates
 
 const styles = StyleSheet.create({
     container :{
-        marginTop : 40
+        marginTop : 40,
+        // paddingBottom : 30
     },
     subHeading : {
         color : '#0B3C58',

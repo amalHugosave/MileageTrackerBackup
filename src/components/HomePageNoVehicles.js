@@ -3,9 +3,11 @@ import { StyleSheet, View ,Text } from 'react-native'
 import AddVehicle from './AddVehicle'
 const HomePageNoVehicles = ({handlePress}) => {
   return (
-    <View>
-        <Text style={styles.welcome}>Track your miles towards a prosperous financial journey!</Text>    
-        <AddVehicle handlePress={handlePress}  />
+    <View style={styles.container}>
+        <Text style={styles.welcome}>Track your miles towards a prosperous financial journey!</Text> 
+        <View style={styles.addVehicleContainer}>
+          <AddVehicle handlePress={handlePress}  />
+        </View>
     </View>
   )
 }
@@ -18,7 +20,10 @@ const styles = StyleSheet.create({
     },bottom : {
         alignItems : 'center',
         // marginTop : 20
+    },addVehicleContainer : {
+      paddingHorizontal : 50
     }
+    
 })
 
 export default HomePageNoVehicles

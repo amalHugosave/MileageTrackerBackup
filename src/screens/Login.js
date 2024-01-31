@@ -4,17 +4,21 @@ import {useRealm , useQuery} from '@realm/react';
 import {Users} from '../Database/models/UsersSchema'
 import UserCard from '../components/UserCard';
 import useUserStore from '../state/Users';
-
+import LinearGradient from 'react-native-linear-gradient';
 // import { useQuery } from '@realm/react';
 
 const sampleUser = require('../rcs/sampleUser.png');
 const addUser = require('../rcs/AddUser.png');
 const Login = ({navigation}) => {
+    const realm = useRealm();
     const users = useQuery(Users);
     const {setUser} = useUserStore()
     const goToHomePage = (data)=>{
         setUser({name : data.name , nickname : data.nickname , email : data.email , passcode : data.passcode , id : data._id});
-        // console.log(data._id)
+        realm.write(()=>{
+            const toUpdate = realm.objects(Users).filtered("_id == $0" ,data._id);
+            toUpdate[0].active = true;
+        })
         navigation.navigate('tabNavigation');
     }
 
@@ -23,6 +27,7 @@ const Login = ({navigation}) => {
     }
 
   return (
+    <LinearGradient style={{flex : 1}}  colors={['#C5E3DC', '#F6F6EC']} >
         <View style={styles.container}>
             <View style={styles.top}>
                 <Image source={require('../rcs/logo.png')} />
@@ -43,13 +48,14 @@ const Login = ({navigation}) => {
 
             </View>
         </View>
+        </LinearGradient>
   )
 }
 
 
 const styles = StyleSheet.create({
     container : {
-        backgroundColor :  '#D0EAEA',
+        // backgroundColor :  '#D0EAEA',
         flex : 1
     },top : {
         marginTop : 25,

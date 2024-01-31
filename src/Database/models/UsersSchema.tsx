@@ -15,7 +15,8 @@ export class Users extends Realm.Object<Users> {
       name: {type: 'string', indexed: 'full-text'},
       nickname : 'string',
       email : 'string',
-      passcode : 'string'
+      passcode : 'string',
+      active : 'bool'
     },
     primaryKey: '_id',
   };

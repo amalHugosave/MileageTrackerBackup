@@ -3,7 +3,7 @@ import { View  ,StyleSheet , Text , Button , Image , Pressable} from 'react-nati
 import InputWithText from '../components/InputWithText'
 import BackButton from '../components/BackButton'
 import CheckBox from '../components/CheckBox'
-
+import LinearGradient from 'react-native-linear-gradient';
 import {useRealm , useQuery} from '@realm/react';
 import {Users} from '../Database/models/UsersSchema';
 import useUserStore from '../state/Users'
@@ -112,6 +112,7 @@ const CreateAccounts = ({navigation}) => {
       }
 
   return (
+    <LinearGradient style={{flex : 1}}  colors={['#C5E3DC', '#F6F6EC']} >
     <View style={styles.container}>
         <BackButton style={styles.image} navigation={navigation}/>
 
@@ -142,13 +143,14 @@ const CreateAccounts = ({navigation}) => {
 
         </View>
     </View>
+    </LinearGradient>
   )
 }
 
 const styles = StyleSheet.create({
     container : {
         flex:1,
-        backgroundColor: '#D0EAEA',       
+        // backgroundColor: '#D0EAEA',       
     },inputscontainer : {
         flex : 0.8,
         justifyContent : 'space-around',

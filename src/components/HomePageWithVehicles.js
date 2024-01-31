@@ -123,6 +123,8 @@ const HomePageWithVehicles = ({vehiclesData ,navigation}) => {
     const handlePressForAddFuel = ()=>{
         navigation.navigate('Refueling' , {screen : 'refuelingForm'}  )
     }
+
+    
     // console.log("x" , mileage);
 
   return (
@@ -146,8 +148,12 @@ const HomePageWithVehicles = ({vehiclesData ,navigation}) => {
   )
 }
 const styles = StyleSheet.create({
+  container : {
+    marginBottom:30
+  },
     imageContainer :{
-        alignItems : 'center'
+        alignItems : 'center',
+        
     },
     welcome : {
         fontSize : 18,

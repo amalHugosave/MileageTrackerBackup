@@ -5,7 +5,7 @@ import PasscodeEntry from '../components/PasscodeEntry'
 import BackButton from '../components/BackButton'
 import PasscodeEntry1 from '../components/PasscodeEntry1'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import LinearGradient from 'react-native-linear-gradient';
 import {useRealm , useQuery} from '@realm/react';
 import {Users} from '../Database/models/UsersSchema';
 import useUserStore from '../state/Users'
@@ -36,7 +36,8 @@ const SetPasscode = ({navigation}) => {
                 name,
                 nickname,
                 email,
-                passcode : ind == 0 ? firstData : ''
+                passcode : ind == 0 ? firstData : '',
+                active : true
             });
           });
 
@@ -54,8 +55,8 @@ const SetPasscode = ({navigation}) => {
         setPasscode(firstData);
         AddUserToRealm(0);
         setPasscodeAndIdToState();
-        getUser();
-        console.log(id)
+        // getUser();
+        // console.log(id)
         navigation.navigate('tabNavigation')
 
     }
@@ -107,6 +108,7 @@ const SetPasscode = ({navigation}) => {
     //         console.log("SECONDData" ,secondData)
     //         console.log("error" ,error)
   return (
+    <LinearGradient style={{flex : 1}}  colors={['#C5E3DC', '#F6F6EC']} >
     <View style={styles.container}>
         <View style={styles.top}>
             <BackButton navigation={navigation} style={styles.image}/>
@@ -125,13 +127,14 @@ const SetPasscode = ({navigation}) => {
             <Button onPress={handleSkip} title="Skip" color="orange" />
         </View>
     </View>
+    </LinearGradient>
   )
 }
 
 const styles = StyleSheet.create({
     container : {
         flex:1,
-        backgroundColor: '#D0EAEA',
+        // backgroundColor: '#D0EAEA',
         padding : 10
     },top : {
         flex : 1

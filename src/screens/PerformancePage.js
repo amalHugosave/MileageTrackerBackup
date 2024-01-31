@@ -21,7 +21,7 @@ const PerformancePage = ({navigation}) => {
     const [userVehicles , setUservehicles] = useState([]);
     const allVehicles = useQuery(Vehicles);
     const allRefuelingData = useQuery(Refueling);
-    const {vehId } = useVehicleStore();
+    const {vehId ,setVehicle } = useVehicleStore();
     const [isRefuelingData , setIsRefuelingData] = useState(false);
     const [mileageChartData , setMileageChartData] = useState(null);
     useEffect(()=>{
@@ -36,6 +36,9 @@ const PerformancePage = ({navigation}) => {
     const getUservehicles = ()=>{
       const curuserveh = realm.objects(Vehicles).filtered('userId == $0' , id);
       setUservehicles(curuserveh);
+      if(!vehId && curuserveh.length > 0){
+        setVehicle({name : curuserveh[0].name , type : curuserveh[0].type , engine : curuserveh[0].engine , userId : curuserveh[0].userId , vehId : curuserveh[0]._id , image : curuserveh[0].image});
+      }
     }
 
     const navigateToVehicleForm = ()=>{
@@ -44,10 +47,14 @@ const PerformancePage = ({navigation}) => {
     
     const getRefuelingDataOfVeh = ()=>{
       const fiveMonthsAgo = new Date(new Date().getFullYear(), new Date().getMonth() - 4, 1);
-      console.log(vehId);
-      const curRefuelingData = realm.objects(Refueling).filtered('vehId == $0 AND date >= $1' ,vehId , fiveMonthsAgo).sorted('date');
-      getPriceChartData(curRefuelingData);
-      getMileageChartData(curRefuelingData)
+      // console.log(vehId);
+      if(vehId){
+        // console.log("y");
+        const curRefuelingData = realm.objects(Refueling).filtered('vehId == $0 AND date >= $1' ,vehId , fiveMonthsAgo).sorted('date');
+        getPriceChartData(curRefuelingData);
+        getMileageChartData(curRefuelingData)
+      }
+      
       // setVehRefuelingData(curRefuelingData);
     }
 
@@ -90,19 +97,22 @@ const PerformancePage = ({navigation}) => {
 
     }
     
-    
+    // console.log(userVehicles , priceChartData , mileageChartData,vehId);
   return (
    
       
     <View style={styles.container}>
       <Text style={styles.heading}>Performance</Text>
-        <ScrollView>
+        <ScrollView style={styles.scrollContainer}>
         {
-            userVehicles.length > 0 ? priceChartData && mileageChartData && <PerformanceWithVehicle navigation={navigation} mileageChartData={mileageChartData} isRefuelingData={isRefuelingData} userVehicles={userVehicles} priceChartData={priceChartData}/>
+            userVehicles.length > 0 && priceChartData && mileageChartData ? 
+            // <></>
+             <PerformanceWithVehicle navigation={navigation} mileageChartData={mileageChartData} isRefuelingData={isRefuelingData} userVehicles={userVehicles} priceChartData={priceChartData}/>
             :
             (
-              // <></>
-                <AddVehicle handlePress={navigateToVehicleForm}/>
+                <View style ={styles.addVehicleContainer}>
+                  <AddVehicle handlePress={navigateToVehicleForm}/>
+                </View>
             )
             
         }
@@ -151,9 +161,14 @@ const styles = StyleSheet.create({
       position : 'absolute',
       bottom : 0,
       right : 0
-  },image : {
-  },refuelingDatas : {
-
+  },addVehicleContainer :{
+    justifyContent : 'center',
+    // backgroundColor : 'red',
+    marginTop : '50%',
+    paddingHorizontal : 60
+  },scrollContainer :{
+    flex :1,
+    // backgroundColor :'yellow'
   }
 })
 
