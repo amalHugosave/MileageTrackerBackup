@@ -1,7 +1,7 @@
 import React from 'react'
 import { View ,Modal , StyleSheet ,Text, Pressable} from 'react-native'
 
-const ModalContainer = ({modalVisible , modaltext , handleAccept , handleReject}) => {
+const ModalContainer = ({modalVisible , modaltext , handleAccept ,modalSub , handleReject}) => {
   return (
         <Modal
         animationType="slide"
@@ -11,6 +11,7 @@ const ModalContainer = ({modalVisible , modaltext , handleAccept , handleReject}
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>{modaltext}</Text>
+            {modalSub && <Text style={styles.modalSub}>{modalSub}</Text>}
             <View style={styles.buttons}>
                 <Pressable
                 onPress={handleReject}
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor : 'rgba(0,0,0,0.2)', 
-    
+      
     },
     modalView: {
       margin: 20,
@@ -60,7 +61,8 @@ const styles = StyleSheet.create({
       borderRadius: 4,
       padding: 10,
       elevation: 2,
-      width : 130
+      width : 155,
+      
     },
     buttonReject: {
       backgroundColor: 'white',
@@ -74,19 +76,29 @@ const styles = StyleSheet.create({
     textStyle: {
       color: 'white',
       textAlign: 'center',
+      
     },rejectText : {
       textAlign: 'center',
         color : '#0B3C58'
     },
     modalText: {
       marginBottom: 15,
-      textAlign: 'center',
-      color : '#0B3C58'
+      color : '#0B3C58',
+      fontSize : 16,
+      fontWeight : 'bold',
+      width : '100%'
     },
     buttons : {
         flexDirection : 'row',
-        justifyContent :'space-around',
-        width : 350
+        justifyContent :'space-between',
+        width : 320,
+        marginLeft : 15,
+        marginRight : 15
+    },modalSub :{
+      width : '100%',
+      color : '#58798C',
+      fontSize : 14,
+      marginBottom : 15
     }
   });
 

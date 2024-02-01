@@ -4,7 +4,8 @@ import { View  , StyleSheet, TextInput, Text  } from 'react-native'
 const passcode = ['' , '' ,'' ,''];
 const PasscodeEntry = ({heading , subtitle , getData}) => {
     const [cursor , setCursor] = useState(5);
-    const [data , setData] = useState('')
+    const [data , setData] = useState('');
+    
     // const [data1 , setData1] = useState('');
     // const [data2 , setData2] = useState('');
     // const [data3 , setData3] = useState('s');

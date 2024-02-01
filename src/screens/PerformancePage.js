@@ -42,7 +42,7 @@ const PerformancePage = ({navigation}) => {
     }
 
     const navigateToVehicleForm = ()=>{
-      navigation.navigate('vehicles' , {screen: 'addVehiclesForm'})
+      navigation.navigate('Vehicles' , {screen: 'addVehiclesForm'})
     }
     
     const getRefuelingDataOfVeh = ()=>{

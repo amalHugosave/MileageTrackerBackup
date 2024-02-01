@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, View , Text , Image , Button} from 'react-native'
 import SVGImg from '../rcs/signupFooter.svg';
 import LinearGradient from 'react-native-linear-gradient';
+import CommonButton from '../components/Buttons/CommonButton';
 const SignUp = ({navigation}) => {
   return (
     <LinearGradient style={{flex : 1}}  colors={['#C5E3DC', '#F6F6EC']} >
@@ -10,8 +11,11 @@ const SignUp = ({navigation}) => {
             <Image source={require('../rcs/logo.png')} />
             <Text style={styles.text1}>Mileage Tracker</Text>
             <Text style={styles.text2}>Create an Account to get Started</Text>
-            <Button title='Sign Up' style={styles.button} onPress={()=>navigation.navigate('createAccount')}/>
+            <CommonButton parentStyles={styles.button} text="Sign Up" handlePress={()=>navigation.navigate('createAccount')}/>
         </View>
+        <Text style={styles.bot}>
+        Track your miles towards a prosperous financial journey!
+        </Text>
         <View>
             <Image source={require('../rcs/signupFooter.png')}/>
         </View>
@@ -34,9 +38,7 @@ const styles = StyleSheet.create({
         flex : 1
     },
     button : {
-        width : 20,
-        backgroundColor : '#0B3C58',
-        color : 'white',
+        width : '70%',
         marginTop : 30
     },
     text1 :{
@@ -46,6 +48,15 @@ const styles = StyleSheet.create({
     text2 :{
         marginTop : 20,
         fontSize : 20
+    },bot :{
+        position : 'absolute',
+        fontSize : 22,
+        bottom : 50,
+        zIndex : 1,
+        color : '#0B3C58',
+        textAlign : 'center',
+        padding : 10,
+        width : '100%'
     }
 
 })

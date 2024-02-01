@@ -47,7 +47,7 @@ export default class PasscodeInput extends React.Component {
               this.props.getData(code);
             }}
             onFulfill={(data)=>{
-              // this.props.getData(data);
+              {this.props.handleFullFill && this.props.handleFullFill(this)};
             }}
             onBackspace={() => console.log('No more back.')}
         />

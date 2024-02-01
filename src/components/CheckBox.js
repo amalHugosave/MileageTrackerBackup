@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Pressable } from 'react-native'
+import { StyleSheet, Pressable ,Text} from 'react-native'
 
 
 const CheckBox = ({setChecked}) => {
@@ -14,21 +14,23 @@ const CheckBox = ({setChecked}) => {
     
   return (
     <Pressable onPress={handlePress} style={[styles.container ,marked && styles.checked ]}>
-        
+        <Text style={styles.text}>✓</Text>
     </Pressable>
   )
 }
 
 const styles = StyleSheet.create({
     container : {
-        padding : 5,
+        padding : 0,
         borderColor : 'black',
         borderWidth : 2,
         borderRadius : 3,
-        margin : 5
+        marginRight: 5,
     },checked : {
         backgroundColor : 'orange',
         borderColor : 'orange'
+    },text : {
+        color : 'white',
     }
 })
 

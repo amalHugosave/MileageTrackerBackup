@@ -26,7 +26,7 @@ const InputWithText = ({text,required , handleInputs , id, errorText , validatio
 
 const styles = StyleSheet.create({
     container :{
-        marginLeft : 30,
+    
     },
     input :{
         height: 40,

@@ -2,6 +2,7 @@ import React from 'react'
 import { View , Image ,Text, StyleSheet, Pressable } from 'react-native'
 
 const UserCard = ({image , data ,handlePress }) => {
+  // console.log(data , "data");
   return (
     <Pressable style={styles.container} onPress={()=>handlePress(data)}>
         <Image style={styles.image} source={image}/>

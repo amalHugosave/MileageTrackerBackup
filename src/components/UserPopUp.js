@@ -8,12 +8,17 @@ import { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { useRealm } from '@realm/react'
 import { Users } from '../Database/models/UsersSchema'
+import { useNavigationState } from '@react-navigation/native'
+import { Vehicles } from '../Database/models/VehiclesSchema'
+import { Refueling } from '../Database/models/RefuelingSchema'
 const UserPopUp = ({navigation}) => {
   const realm = useRealm();
+  const state = useNavigationState(state => state);
   const {id , nickname , name} = useUserStore();
   const userImage = require('../rcs/dummyProfile.png');
   const deleteImage = require('../rcs/deleteUser.png');
   const [isModalOpen , setIsModalopen] = useState(false);
+  const [isDeleteUserModalOpen , setIsDeleteUserModalOpen] = useState(false);
   const pressHandle = ()=>{
     navigation.closeDrawer();
     setIsModalopen(true);
@@ -22,8 +27,12 @@ const UserPopUp = ({navigation}) => {
   const logoutAccept = ()=>{
     realm.write(()=>{
       const toUpdate = realm.objects(Users).filtered('active == $0' , true);
-      toUpdate[0].active = false;
+      // console.log(toUpdate);
+      if(toUpdate.length > 0)
+        toUpdate[0].active = false;
+      // console.log(toUpdate);
     })
+    
     navigation.navigate('login');
   }
 
@@ -31,10 +40,42 @@ const UserPopUp = ({navigation}) => {
     setIsModalopen(false);
   }
 
-  // console.log(isModalOpen)
+  const OpenDeleteModal = ()=>{
+    navigation.closeDrawer();
+    setIsDeleteUserModalOpen(true);
+  }
+  const deleteAccept = ()=>{
+    const toDelete = realm
+      .objects(Users)
+      .filtered('_id == $0', id);
+
+      const toDeleteVehicles = realm
+      .objects(Vehicles)
+      .filtered('userId == $0', id);
+
+
+      const toDeleteRefueling = realm
+      .objects(Refueling)
+      .filtered('userId == $0', id);
+
+      realm.write(()=>{
+        realm.delete(toDelete);
+        realm.delete(toDeleteVehicles);
+        realm.delete(toDeleteRefueling);
+      })
+
+      navigation.navigate('login');
+  }
+
+  const deleteReject = ()=>{
+    setIsDeleteUserModalOpen(false);
+  }
+  console.log(state , "state")
   return (
     <View style={styles.container}>
       <ModalContainer modalVisible={isModalOpen} modaltext="Are you sure you want to logout?" handleAccept={logoutAccept} handleReject={logoutReject}/>
+      <ModalContainer modalVisible={isDeleteUserModalOpen} modaltext="Are you sure you want to delete your account?" modalSub="Note that all your data will be lost permanently." handleAccept={deleteAccept} handleReject={deleteReject}/>
+
       <View style={styles.top}>
         <Image source={userImage}/>
         <Text style={styles.heading}>{nickname || name}</Text>
@@ -42,7 +83,7 @@ const UserPopUp = ({navigation}) => {
       <View style={styles.buttonContainer}>
         <DrawerButton handlePress={logoutAccept} image={userImage} text="Switch Profile"/>
         <View style={styles.underline}></View>
-        <DrawerButton image={deleteImage} text="Delete Account"/>
+        <DrawerButton handlePress={OpenDeleteModal} image={deleteImage} text="Delete Account"/>
       </View>
       <View style={styles.logout}>
         <LogoutButton pressHandle = {pressHandle}/>

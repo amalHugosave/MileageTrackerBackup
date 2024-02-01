@@ -11,7 +11,7 @@ const RefuelingBox = ({data , navigation}) => {
             <RNPickerSelect
                 style={{...pickerSelectStyles}}
                 placeholder={{}}
-                onValueChange={(value) => {handleSelectChange(value)}}
+                // onValueChange={(value) => {handleSelectChange(value)}}
                 items={{label : 'Last 30 Days'}}
             />
             <Text style={styles.heading}>{data.length} Records | {today.subtract(30 , 'days').format('DD/MMM/YY')} - Today</Text>

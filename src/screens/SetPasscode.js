@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View  , StyleSheet, Text , Button  } from 'react-native'
+import { View  , StyleSheet, Text , Button, TouchableOpacity  } from 'react-native'
 import {useState} from 'react'
 import PasscodeEntry from '../components/PasscodeEntry'
 import BackButton from '../components/BackButton'
@@ -10,29 +10,22 @@ import {useRealm , useQuery} from '@realm/react';
 import {Users} from '../Database/models/UsersSchema';
 import useUserStore from '../state/Users'
 import {BSON} from 'realm';
-
-
+import CommonButton from '../components/Buttons/CommonButton'
+import useVehicleArrayStore from '../state/VehiclesArray'
+import { Vehicles } from '../Database/models/VehiclesSchema'
 
 const SetPasscode = ({navigation}) => {
 
     const {setPasscode ,passcode ,name , nickname , email,setId , id} = useUserStore();
-    const state = useUserStore();
+    const [countPasscode , setCountPasscode] = useState(0);
     const realm = useRealm();
     const users = useQuery(Users);
-    // const deleteProfile = () => {
-    //     const toDelete = realm
-    //       .objects(Users)
-    //     realm.write(() => {
-    //       realm.delete(toDelete);
-    //     });
-    //   };
-
-    //   deleteProfile();
 
     const AddUserToRealm = (ind)=>{
+        const id = new BSON.ObjectId()
         realm.write(() => {
             realm.create(Users, {
-                _id: new BSON.ObjectId(),
+                _id: id,
                 name,
                 nickname,
                 email,
@@ -40,6 +33,7 @@ const SetPasscode = ({navigation}) => {
                 active : true
             });
           });
+          setId(id);
 
     }
     const getUser = ()=>{
@@ -50,20 +44,9 @@ const SetPasscode = ({navigation}) => {
 
 
     const handleSubmit =  ()=>{
-        // getActiveUserAndUpdtePasscode();
-        // getUser();
         setPasscode(firstData);
         AddUserToRealm(0);
-        setPasscodeAndIdToState();
-        // getUser();
-        // console.log(id)
         navigation.navigate('tabNavigation')
-
-    }
-    const setPasscodeAndIdToState = ()=>{
-        const user = realm.objects(Users).filtered('email == $0' , email)[0];
-        
-        setId(user._id);
 
     }
     
@@ -103,10 +86,6 @@ const SetPasscode = ({navigation}) => {
     const validate = (d1 , d2) =>{
         setError(!(d1 === d2));
     }
-    // console.log("isSecondInputCompleted" ,isSecondInputCompleted)
-    //         console.log("firstData" ,firstData)
-    //         console.log("SECONDData" ,secondData)
-    //         console.log("error" ,error)
   return (
     <LinearGradient style={{flex : 1}}  colors={['#C5E3DC', '#F6F6EC']} >
     <View style={styles.container}>
@@ -123,8 +102,10 @@ const SetPasscode = ({navigation}) => {
             { error && <Text style={styles.error}>The passcodes don't match</Text>}
         </View>
         <View style={styles.bottom}>
-            <Button onPress={handleSubmit}  disabled={error} style={styles.b1} title="continue" color="#0B3C58"/>
-            <Button onPress={handleSkip} title="Skip" color="orange" />
+            <CommonButton text="continue" disabled={error} handlePress={handleSubmit} />
+            <TouchableOpacity onPress={handleSkip} style={styles.skipButton}>
+                <Text style={styles.skipButtonText}>Skip</Text>
+            </TouchableOpacity>
         </View>
     </View>
     </LinearGradient>
@@ -152,6 +133,14 @@ const styles = StyleSheet.create({
     },error : {
         color : 'crimson',
         textAlign :'center'
+    },skipButton : {
+        paddingVertical : 16,
+        paddingHorizontal : 20,
+        borderRadius : 8
+    },skipButtonText :{
+        color :'#0B3C58',
+        textAlign : 'center',
+        fontWeight: 'bold'
     }
 })
 

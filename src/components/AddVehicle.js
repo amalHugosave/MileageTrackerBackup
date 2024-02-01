@@ -1,11 +1,13 @@
 import React from 'react'
-import { StyleSheet, View ,Text , Button , Image } from 'react-native'
+import { StyleSheet, View ,Text , Button , Image ,TouchableOpacity } from 'react-native'
+import { ArrowRight } from 'react-native-feather'
+import AddButton from './Buttons/AddButton'
 const AddVehicle = ({  handlePress}) => {
   return (
     <View style={styles.container}>
             <Image source={require('../rcs/dummyVehicle.png')} />
             <Text style={styles.vehAdd}>Add vehicles to start tracking its fueling and performance</Text>
-            <Button onPress={handlePress} title= "Add Vehicle"/>
+            <AddButton text="Add Vehicle" handlePress={handlePress}/>
     </View>
   )
 }
@@ -21,7 +23,7 @@ const styles = StyleSheet.create({
         marginBottom : 10
     },container : {
       alignItems : 'center'
-    }
+    },
 })
 
 export default AddVehicle

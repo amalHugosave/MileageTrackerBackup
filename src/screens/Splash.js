@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View ,Text , StyleSheet , Image} from 'react-native'
-
+// import { useEffect } from 'react'
 const logo = require('../rcs/logo.png')
-const Splash = () => {
+const Splash = ({navigation}) => {
+
+  useEffect(()=>{
+    setTimeout(()=>{
+      navigation.navigate('signUp');
+    } , 2000)
+  } , [])
   return (
     <View style={styles.container}>
         <Image source={logo} />    

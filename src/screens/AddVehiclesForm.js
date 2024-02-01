@@ -9,6 +9,8 @@ import {launchImageLibrary} from 'react-native-image-picker';
 // import {RNFS} from 'react-native-fs';
 import {launchCamera} from 'react-native-image-picker';
 import { Vehicles } from '../Database/models/VehiclesSchema';
+import DoubleButton from '../components/Buttons/DoubleButton';
+import useVehicleArrayStore from '../state/VehiclesArray';
 var RNFS = require('react-native-fs');  
 
 
@@ -28,6 +30,7 @@ const sampleImages = [`iVBORw0KGgoAAAANSUhEUgAAAUQAAACUCAYAAADro1BdAAAACXBIWXMAA
   const {id} = useUserStore()
   const [data ,setData] = useState({name : '',type :0 ,engine : '' ,image : '' });
   const [errors, setErrors] = useState({name : errorstext[0] , type : errorstext[1]})
+  const {addVehicle} = useVehicleArrayStore();
   const realm = useRealm();
 
   // const convertImageToBase64 =  async() => {
@@ -75,26 +78,18 @@ const handlePress = ()=>{
 
 
   const handleSubmit = async ()=>{
-    // console.log("Y" ,RNFS)
-    // const base64Image = await convertImageToBase64();
-    // console.log(base64Image)
-    // console.log(data);
-    // console.log(sampleImages[data.type - 2])
     const image = data.image || sampleImages[data.type - 2];
-    // console.log("image" , image)
+    const id = new BSON.ObjectID();
     realm.write(()=>{
       realm.create(Vehicles , {
-        _id : new BSON.ObjectID(),
-        // name : data.name,
-        // type : data.type,
-        // engine : data.engine,
+        _id : id,
         ...data,
         image : image,
         userId : id
       })
     })
-      
-
+    
+      addVehicle([{id , ...data , image , userId}]);
       navigation.navigate('vehiclesInfo')
   }
 
@@ -158,9 +153,9 @@ const handlePress = ()=>{
             {errors.engine && <Text style={styles.error}>{errors.engine}</Text>}
         </View>
         <View style={styles.bottom}>
-            <Button onPress={()=>navigation.navigate('vehiclesInfo')} title="Cancel" />
-            <Button disabled={errors.name.length !== 0 || errors.type.length !== 0} onPress={handleSubmit} title="Add" color="#0B3C58"/>
-
+            <DoubleButton textHollow ="Cancel" handlehollowPress={()=>navigation.navigate('vehiclesInfo')} handleSolidPress={handleSubmit}
+              solidDisabled = {errors.name.length !== 0 || errors.type.length !== 0} textSolid='Add'
+          />
         </View>
     </View>
 
@@ -176,7 +171,7 @@ const styles = StyleSheet.create({
     },
     input : {
         backgroundColor : 'white',
-        width : 300,
+        width : 200,
         borderRadius : 7,
         marginTop : 20,
         paddingRight: 30,
@@ -195,13 +190,10 @@ const styles = StyleSheet.create({
         color : 'black',
         textAlign : 'center'
     },bottom : {
-        flexDirection : "row",
-        marginTop : 100,
-        // position: 'absolute',
-        // bottom: 0,
-        // left: 0,
-        // right: 0,
-        justifyContent : 'center',
+        // position :'absolute',
+        // bottom : 0,
+        // backgroundColor : 'red',
+        marginTop : 160,
         paddingBottom : 20
     },error : {
       color : 'crimson',

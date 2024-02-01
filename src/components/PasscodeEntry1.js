@@ -3,7 +3,7 @@ import { View  , StyleSheet, TextInput, Text  } from 'react-native'
 import PasscodeIput from './PasscodeInput';
 
 const passcode = ['' , '' ,'' ,''];
-const PasscodeEntry = ({getData,heading , subtitle ,isfocused}) => {
+const PasscodeEntry = ({getData,heading , subtitle ,isfocused, handleFullFill}) => {
 // console.log(getData);
 
 
@@ -12,7 +12,7 @@ const PasscodeEntry = ({getData,heading , subtitle ,isfocused}) => {
     <View style={styles.container} >
             <Text style={styles.passHeading}>{heading} <Text style = {styles.star}>*</Text></Text>
             {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
-                <PasscodeIput isfocused={isfocused} getData={getData}/>
+                <PasscodeIput  isfocused={isfocused} getData={getData} handleFullFill={handleFullFill}/>
     </View>
   )
 }

@@ -12,6 +12,7 @@ import DatePicker from 'react-native-date-picker'
 import moment from 'moment';
 import { Refueling } from '../Database/models/RefuelingSchema';
 import { BSON } from 'realm';
+import DoubleButton from '../components/Buttons/DoubleButton';
 const RefuelingForm = ({navigation }) => {
     const realm = useRealm();
     const {id} = useUserStore();
@@ -132,8 +133,12 @@ const RefuelingForm = ({navigation }) => {
         </View>
 
         <View style={styles.bottom}>
-            <Button onPress={()=>navigation.navigate('refuelingInfo')} title="Cancel" />
-            <Button onPress={handleSubmit} disabled={!date || !data.odometerStart || !data.odometerEnd || !data.price || !data.fuelConsumed || data.odometerStart >= data.odometerEnd} color="#0B3C58" title="Add" />
+            <DoubleButton textHollow ="Cancel" handlehollowPress={()=>navigation.navigate('refuelingInfo')} handleSolidPress={handleSubmit}
+              solidDisabled = {!date || !data.odometerStart || !data.odometerEnd || !data.price || !data.fuelConsumed || data.odometerStart >= data.odometerEnd}
+            textSolid='Add'
+          />
+            {/* <Button onPress={()=>navigation.navigate('refuelingInfo')} title="Cancel" />
+            <Button onPress={handleSubmit} disabled={!date || !data.odometerStart || !data.odometerEnd || !data.price || !data.fuelConsumed || data.odometerStart >= data.odometerEnd} color="#0B3C58" title="Add" /> */}
 
         </View>
     </View>
@@ -165,8 +170,6 @@ const styles = StyleSheet.create({
         // flex : 0.1,
         position : 'absolute',
         bottom : 40,
-        backgroundColor : 'yellow',
-        flexDirection : 'row',
         alignItems : 'cneter',
         // left : 0
     }

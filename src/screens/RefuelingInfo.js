@@ -56,13 +56,13 @@ const RefuelingInfo = ({navigation}) => {
     }
 
     const navigateToVehicleForm = ()=>{
-        navigation.navigate('vehicles' , {screen : 'addVehiclesForm'})
+        navigation.navigate('Vehicles' , {screen : 'addVehiclesForm'})
     }
 
     const navigateToRefuelingForm = ()=>{
         navigation.navigate('refuelingForm' );
     }
-    console.log(vehRefuelingData)
+    // console.log(vehRefuelingData)
   return (
     <View style={styles.container}>
         <View style={styles.headingContainer}>

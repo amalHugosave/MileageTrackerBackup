@@ -6,8 +6,11 @@ import { Vehicles } from '../Database/models/VehiclesSchema';
 import HomePageNoVehicles from '../components/HomePageNoVehicles';
 import HomePageWithVehicles from '../components/HomePageWithVehicles';
 import LinearGradient from 'react-native-linear-gradient';
+import { Users } from '../Database/models/UsersSchema';
+import useVehicleArrayStore from '../state/VehiclesArray';
 const ProfilePage = ({navigation}) => {
-    const {name , nickname , id} = useUserStore();
+    const {name , nickname , id , setUser} = useUserStore();
+    const {VehiclesArray} = useVehicleArrayStore(); 
     const [userVehicles , setUserVehicles] = useState([]);
     const AllVehicles = useQuery(Vehicles);
     const realm = useRealm();
@@ -16,13 +19,22 @@ const ProfilePage = ({navigation}) => {
         const curUserVehicles = realm.objects(Vehicles).filtered('userId == $0' , id);
         setUserVehicles(curUserVehicles);
     }
+
+    useEffect(()=>{
+        if(!id){
+            const activeUser = realm.objects(Users).filtered('active == $0' , true)[0];
+            setUser({name : activeUser.name , nickname : activeUser.nickname , email : activeUser.email , id : activeUser._id , passcode : activeUser.passcode});
+       }
+    },[])
+
     useEffect(() =>{
-        getUserVehicles();
-    } ,[AllVehicles])
+        if(id)
+            getUserVehicles();
+    } ,[AllVehicles , id])
 
 
     const    addVehicles = ()=>{
-        navigation.navigate('vehicles',{screen : 'addVehiclesForm'});
+        navigation.navigate('Vehicles',{screen : 'addVehiclesForm'});
     }
     // const navigateToPopUp = ()=>{
     //     navigation.navigate('popUp');

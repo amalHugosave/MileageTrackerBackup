@@ -1,12 +1,12 @@
 import React from 'react'
-import { View ,Image ,Text , Button, StyleSheet } from 'react-native'
-
+import { View ,Image ,Text , Button, StyleSheet ,TouchableOpacity} from 'react-native'
+import AddButton from './Buttons/AddButton'
 const AddRefuelingData = ({handlePress}) => {
   return (
     <View style={styles.container}>
         <Image style={styles.image} source={require('../rcs/clouds.png')}/>
         <Text style={styles.text}>it's time to add the refueling data to get more insights</Text>
-        <Button color="#0B3C58" title="Add Refueling" onPress={handlePress}/>
+        <AddButton text="Add Refueling" handlePress={handlePress}/>
     </View>
   )
 }

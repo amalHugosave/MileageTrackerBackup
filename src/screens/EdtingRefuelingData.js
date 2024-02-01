@@ -7,6 +7,7 @@ import TwoTexts from '../components/TwoTexts'
 import { useRealm } from '@realm/react'
 import ModalContainer from '../components/ModalContainer'
 import { Refueling } from '../Database/models/RefuelingSchema'
+import HollowButton from '../components/Buttons/HollowButton'
 const dayNames = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
 const EdtingRefuelingData = ({route , navigation}) => {
     // console.log("route" ,route.params);
@@ -27,7 +28,7 @@ const EdtingRefuelingData = ({route , navigation}) => {
         realm.write(()=>{
             realm.delete(toDelete);
         });
-        navigation.navigate('refuelingInfo');
+        // navigation.navigate('refuelingInfo');
     }
 
     const handleReject = ()=>{
@@ -66,7 +67,8 @@ const EdtingRefuelingData = ({route , navigation}) => {
             </View>
         </View>
         <View style={styles.bottom}>
-            <Button onPress={handleEdit} title='Edit'/>
+            <HollowButton text="Edit" onPress={handleEdit} parentStyles={styles.buttonWidth}/>
+            {/* <Button onPress={handleEdit} title='Edit'/> */}
         </View>
     </View>
   )
@@ -112,7 +114,10 @@ const styles = StyleSheet.create({
     },bottom :{
         position : 'absolute',
         bottom : 20,
-        alignItems : 'center'
+        alignItems : 'center',
+        width : "100%"
+    },buttonWidth :{
+        width : "80%"
     }
 })
 
